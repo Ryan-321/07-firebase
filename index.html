@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Train Scheduler</title>
+  <link rel='stylesheet' href='assets/css/style.css' />
+</head>
+<body>
+  <header>
+    <h1>Virginia Creeper Schedule</h1>
+  </header>
+  <main>
+    <section class='Display'>
+      <table id='table'>
+        <tr>
+          <th>Train Name</th>
+          <th>Destination</th>
+          <th>Frequency(min)</th>
+          <th>Next Arrival</th>
+          <th>Minutes Away</th>
+        </tr>
+      </table>
+    </section>
+    <section class='form-wrapper'>
+      <form id='form'>
+        <label for='name'>Train Name</label>
+        <input type="text" id='name' />
+        <label for="destination">Destination</label>
+        <input type='text' id='destination' />
+        <label for='first-train'>First Train Time (HH:mm - miltary time)</label>
+        <input type='text' id='first-train' />
+        <label for='frequency'>Frequency</label>
+        <input type='text' id='frequency' />
+        <button id='submit-btn'>Submit</button>
+      </form>
+    </section>
+  </main>
+
+  <script src='https://www.gstatic.com/firebasejs/4.1.2/firebase.js'></script>
+  <script src='assets/js/db.js'></script>
+  <script src='assets/js/moment.js'></script>
+  <script src='assets/js/script.js'></script>
+</body>
+</html>
