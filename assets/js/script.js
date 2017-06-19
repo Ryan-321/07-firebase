@@ -1,34 +1,20 @@
 var db = firebase.database()
 
+// event listeners
+
 document.getElementById('submit-btn').addEventListener('click', handleClick)
-// Get data on submit
 function handleClick (event) {
   event.preventDefault()
-  // get data
-  var name = document.getElementById('name').value
-  var destination = document.getElementById('destination').value
-  var firstTrain = document.getElementById('first-train').value
-  var frequency = document.getElementById('frequency').value
-  // build object
-  var data = {}
-  data.name = name
-  data.destination = destination
-  data.firstTrain = firstTrain
-  data.frequency = frequency
-  // set data in firebase
+  var data = getData()
+  console.log(data)
   db.ref().push(data)
-  // clear it
   document.getElementById('form').reset()
-  }
+}
+// firebase listeners
 
-db.ref().on('child_added', function(snapshot) {
-  console.log('child added', snapshot.val())
-  // NOTE need to order these
+db.ref().on('child_added', function (snapshot) {
   var data = snapshot.val()
-  // append rows to the view
-    // build a row
   var tr = document.createElement('tr')
-  // make a loop to go over the keys???
   for (var key in data) {
     var td = document.createElement('td')
     td.innerHTML = data[key]
@@ -36,6 +22,40 @@ db.ref().on('child_added', function(snapshot) {
   }
   document.getElementById('table').appendChild(tr)
 })
-// make an event listener, so when new data is added, its also added to screen
+
+
+// functions
+
+function getData () {
+  var data = {}
+  var firstTrain = document.getElementById('first-train').value
+  data.a_name = document.getElementById('name').value
+  data.b_destination = document.getElementById('destination').value
+  data.c_frequency = document.getElementById('frequency').value
+  data.d_next_arrival = nextArrival(firstTrain, data.c_frequency)
+  data.e_min_over = minutesOver(minutesDiff(firstTrain), data.c_frequency)
+  return data
+}
+
+function nextArrival (ft, freq) {
+  var ct = moment()
+  var to = moment(ft, 'HH:mm')
+  if (ct > to) {
+    var over = minutesOver(minutesDiff(to), freq)
+    return moment().add(over, 'm').format('h:mm a')
+  } else {
+    return moment(ft, 'HH:mm').format('h:mm a')
+  }
+}
+
+function minutesDiff (ft) {
+  var ct = moment()
+  var to = moment(ft, 'HH:mm')
+  return ct.diff(to, 'minutes')
+}
+
+function minutesOver (diff, freq) {
+  return diff % freq
+}
 
 // Bonus material
