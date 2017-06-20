@@ -23,7 +23,6 @@ db.ref().on('child_added', function (snapshot) {
   document.getElementById('table').appendChild(tr)
 })
 
-
 // functions
 
 function getData () {
@@ -33,7 +32,7 @@ function getData () {
   data.b_destination = document.getElementById('destination').value
   data.c_frequency = document.getElementById('frequency').value
   data.d_next_arrival = nextArrival(firstTrain, data.c_frequency)
-  data.e_min_over = minutesOver(minutesDiff(firstTrain), data.c_frequency)
+  data.e_min_until = remainder(minutesGT(firstTrain), data.c_frequency)
   return data
 }
 
@@ -41,20 +40,25 @@ function nextArrival (ft, freq) {
   var ct = moment()
   var to = moment(ft, 'HH:mm')
   if (ct > to) {
-    var over = minutesOver(minutesDiff(to), freq)
+    var diff = minutesGT(ft)
+    var over = remainder(diff, freq)
     return moment().add(over, 'm').format('h:mm a')
   } else {
     return moment(ft, 'HH:mm').format('h:mm a')
   }
 }
 
-function minutesDiff (ft) {
+function minutesGT (ft) {
   var ct = moment()
   var to = moment(ft, 'HH:mm')
-  return ct.diff(to, 'minutes')
+  if (ct > to) {
+    return ct.diff(to, 'minutes')
+  } else {
+    return to.diff(ct, 'minutes')
+  }
 }
 
-function minutesOver (diff, freq) {
+function remainder (diff, freq) {
   return diff % freq
 }
 

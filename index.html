@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Train Scheduler</title>
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC|Patrick+Hand+SC' rel='stylesheet' />
+  <link rel='stylesheet' href='assets/css/reset.css' />
   <link rel='stylesheet' href='assets/css/style.css' />
 </head>
 <body>
@@ -23,19 +25,22 @@
     </section>
     <section class='form-wrapper'>
       <form id='form'>
-        <label for='name'>Train Name</label>
-        <input type="text" id='name' />
-        <label for="destination">Destination</label>
-        <input type='text' id='destination' />
-        <label for='first-train'>First Train Time (HH:mm - miltary time)</label>
-        <input type='text' id='first-train' />
-        <label for='frequency'>Frequency</label>
-        <input type='text' id='frequency' />
+        <fieldset>
+          <label for='name'>Train Name</label>
+          <input type="text" id='name' />
+          <label for="destination">Destination</label>
+          <input type='text' id='destination' />
+        </fieldset>
+        <fieldset>
+          <label for='first-train'>First Train Time (HH:mm - miltary time)</label>
+          <input type='text' id='first-train' />
+          <label for='frequency'>Frequency</label>
+          <input type='text' id='frequency' />
+        </fieldset>
         <button id='submit-btn'>Submit</button>
       </form>
     </section>
   </main>
-
   <script src='https://www.gstatic.com/firebasejs/4.1.2/firebase.js'></script>
   <script src='assets/js/db.js'></script>
   <script src='assets/js/moment.js'></script>
