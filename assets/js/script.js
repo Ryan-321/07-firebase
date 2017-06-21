@@ -4,17 +4,10 @@ var db = firebase.database()
 // event listeners
 
 document.getElementById('submit-btn').addEventListener('click', handleClick)
-function handleClick (event) {
-  event.preventDefault()
-  var data = getData()
-  db.ref().push(data)
-  document.getElementById('form').reset()
-}
 
 // firebase listeners
 
-// update times in DB for current time
-db.ref().once('value').then(function (snapshot) {
+db.ref().once('value').then(function (snapshot) { // updates times already stored
   for (var key in snapshot.val()) {
     var arrival = snapshot.val()[key].d_next_arrival
     var freq = snapshot.val()[key].c_frequency
@@ -27,7 +20,7 @@ db.ref().once('value').then(function (snapshot) {
     // update time
     db.ref(key).update(updates)
   }
-}).then(function () {
+}).then(function () { // puts items on page and listens for new
   db.ref().on('child_added', function (snapshot) {
     var data = snapshot.val()
     var tr = document.createElement('tr')
@@ -62,6 +55,7 @@ function nextArrival (train, freq) {
     var diff = currentTime.diff(arrival, 'minutes') % freq
     return moment().add(diff, 'm').format('h:mm a')
   } else if (currentTime.format('HH:mm') === arrival.format('HH:mm')) {
+    // if currentTime equals arrival time, return currentTime plus frequency
     return currentTime.add(freq, 'm').format('h:mm a')
   } else {
     // if arrival time is > than current, return arrival time
@@ -77,4 +71,9 @@ function minutesAway (train) {
   return diff
 }
 
-// Bonus material
+function handleClick (event) {
+  event.preventDefault()
+  var data = getData()
+  db.ref().push(data)
+  document.getElementById('form').reset()
+}
