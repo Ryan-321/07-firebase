@@ -8,3 +8,4 @@ https://ryan-321.github.io/07-firebase/
  - moment.js for manipulating times
  - vanilla JS for DOM maniputation
  - CSS reset
+ - promises
