@@ -1,5 +1,4 @@
 /* global moment firebase */
-
 var db = firebase.database()
 
 // event listeners
@@ -26,8 +25,7 @@ db.ref().once('value').then(function (snapshot) {
     updates.d_next_arrival = na
     updates.e_min_until = min
     // update time
-    db.ref(key).update(updates).then(function () {
-    })
+    db.ref(key).update(updates)
   }
 }).then(function () {
   db.ref().on('child_added', function (snapshot) {
